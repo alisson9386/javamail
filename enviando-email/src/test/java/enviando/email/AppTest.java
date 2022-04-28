@@ -8,7 +8,7 @@ import java.util.Properties;
 public class AppTest {
 	
 	@org.junit.Test
-	public void  testeEmail() {
+	public void  testeEmail() { 
 		
 		Properties properties = new Properties();
 		properties.put("mail.smtp.auth", "true"); //Autorização
