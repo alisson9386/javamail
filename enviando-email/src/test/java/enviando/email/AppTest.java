@@ -10,7 +10,7 @@ public class AppTest {
 
 	private String userName = "teste.javaprojects@gmail.com";
 	
-	private String password = "Z0rr0b@tmak";
+	private String password = "*********";
 	
 	@org.junit.Test
 	public void  testeEmail() { 
