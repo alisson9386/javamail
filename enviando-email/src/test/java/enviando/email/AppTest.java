@@ -14,13 +14,14 @@ public class AppTest {
 
 	private String userName = "teste.javaprojects@gmail.com";
 	
-	private String password = "********";
+	private String password = "****";
 	
 	@org.junit.Test
 	public void  testeEmail() { 
 		
 		try {
 			Properties properties = new Properties();
+			properties.put("mail.smtp.ssl.trust", "*"); //Autenticação para não precisar desativar o antivirus
 			properties.put("mail.smtp.auth", "true"); //Autorização
 			properties.put("mail.smtp.starttls.enable", "true"); //Autenticação
 			properties.put("mail.smtp.host", "smtp.gmail.com"); //Servidor do gmail
@@ -35,10 +36,10 @@ public class AppTest {
 				}
 			});
 			
-			Address [] toUser = InternetAddress.parse("alissondeives70@gmail.com, fafa.restier@gmail.com");
+			Address [] toUser = InternetAddress.parse("alissondeives70@gmail.com");
 			
 			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress(userName)); //Quem esta enviando
+			message.setFrom(new InternetAddress(userName, "Tests Projects")); //Quem esta enviando
 			message.setRecipients(Message.RecipientType.TO, toUser); // Quem esta recebendo
 			message.setSubject("E-mail enviado pelo código Java"); // Assunto do email
 			message.setText("Esta mensagem foi enviada pelo código Java, através do JavaMail"); //Corpo do email
