@@ -3,6 +3,7 @@ package enviando.email;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.Properties;
 
 import javax.activation.DataHandler;
@@ -45,6 +46,8 @@ public class ObjetoEnviaEmail {
 	}
 	
 	public void enviarEmail(boolean envioHtml) throws Exception{
+		
+		
 		
 		Properties properties = new Properties();
 		properties.put("mail.smtp.ssl.trust", "*"); //Autenticação para não precisar desativar o antivirus
@@ -115,16 +118,29 @@ public void enviarEmailAnexo(boolean envioHtml) throws Exception{
 			corpoEmail.setText(textoEmail); //Corpo do email
 		}
 		
-		//Parte 2 - Anexo
-		MimeBodyPart anexoEmail = new MimeBodyPart();
-		anexoEmail.setDataHandler(new DataHandler(new ByteArrayDataSource(simuladorPdf(), "aplication/pdf")));
-		anexoEmail.setFileName("anexoEmail.pdf");
-		
+		ArrayList<FileInputStream> arquivos = new ArrayList<FileInputStream>();
+		arquivos.add(simuladorPdf());
+		arquivos.add(simuladorPdf());
+		arquivos.add(simuladorPdf());
+		arquivos.add(simuladorPdf());
 		
 		Multipart multipart = new MimeMultipart();
 		multipart.addBodyPart(corpoEmail);
+		
+		
+		int index = 0;
+		for (FileInputStream fileInputStream : arquivos) {
+		
+		//Parte 2 - Anexo
+		MimeBodyPart anexoEmail = new MimeBodyPart();
+		anexoEmail.setDataHandler(new DataHandler(new ByteArrayDataSource(fileInputStream, "aplication/pdf")));
+		anexoEmail.setFileName("anexoEmail" + (index + 1) +".pdf");
+		
 		multipart.addBodyPart(anexoEmail);
 		
+		index++;
+		
+		} 
 		message.setContent(multipart);
 		
 		
