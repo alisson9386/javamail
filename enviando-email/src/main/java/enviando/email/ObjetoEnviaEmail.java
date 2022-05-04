@@ -31,7 +31,7 @@ public class ObjetoEnviaEmail {
 		this.textoEmail = textoEmail;
 	}
 	
-	public void enviarEmail() throws Exception{
+	public void enviarEmail(boolean envioHtml) throws Exception{
 		
 		Properties properties = new Properties();
 		properties.put("mail.smtp.ssl.trust", "*"); //Autenticação para não precisar desativar o antivirus
@@ -55,7 +55,13 @@ public class ObjetoEnviaEmail {
 		message.setFrom(new InternetAddress(userName, nomeRemetente)); //Quem esta enviando
 		message.setRecipients(Message.RecipientType.TO, toUser); // Quem esta recebendo
 		message.setSubject(assuntoEmail); // Assunto do email
-		message.setText(textoEmail); //Corpo do email
+		
+		if(envioHtml) {
+			message.setContent(textoEmail, "text/html; charset=utf-8");
+		}else {
+			message.setText(textoEmail); //Corpo do email
+		}
+		
 		
 		Transport.send(message);
 	}
